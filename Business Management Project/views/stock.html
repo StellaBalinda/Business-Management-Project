@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALPHA | STOCK</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/font-awesome.min.css" rel="stylesheet">
+    <link href="../css/AdminLTE.css" rel="stylesheet">
+    <link href="../css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
+    <link href="../css/sweetalert.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/user.css" rel="stylesheet">
+    
+    <style>
+        table thead,table tfoot{
+            background-color:#4ABDAC;
+            color: #fff;
+        }
+        .box-headingz{
+            background-color:#4ABDAC;
+        }
+        .table-responsive, .panel{
+            margin: 3%;
+        }
+
+        .modal-header{
+            background-color: #4ABDAC;
+            color: #fff;
+        }
+        
+    </style>    
+</head>
+<body class="bg" ng-app="myAlpha" ng-controller="Ctr_Stock" ng-init="startStock()">
+    <div class="wrapper">
+        <header class="main-header headers">
+            <a href="#" class="logo">
+                <span class="logo-lg" ><img src="../images/logo.png" height="90" width="150"></span>
+            </a>
+            <div class="pull-left">
+               <h1 class="text-center text-white">Welcome To The Management System</h1> 
+            </div>
+            <div class="btn pull-right logout" ng-click="logout()" style="height:90px;background-color: #3fb0ac; color: #fff; cursor: pointer;padding-top: 50px;">Logout <i class="fa fa-3x fa-sign-out fa-lg"></i>
+            </div>
+        </header>
+
+        <aside class="main-sidebar" >
+            <section class="sidebar">
+                <ul class="sidebar-menu navbar">
+                    <li class="treeview" id="items_link_id">
+                        <a href="#">
+                            <span><i class="fa fa-list"></i> &nbsp;ITEMS</span>          
+                        </a>
+                    </li>
+                    <li class="treeview" ng-click="stockList()" id="stock_link_id">
+                        <a href="#">
+                            <span><i class="fa fa-cubes"></i> &nbsp;STOCK</span>          
+                        </a>
+                    </li>
+                    <li class="treeview" id="inventory_link_id">
+                        <a href="#">
+                            <span><i class="fa fa-list-ol"></i> &nbsp;Inventory</span>          
+                        </a>
+                    </li>
+                </ul>
+                <div class="footer_other">
+                    &copy;2017 ALPHA | All rights reserved.
+                </div>
+            </section>
+        </aside>
+
+        <div class="content-wrapper">
+            <div class="container-fluid englobe" id="item_content">
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-tabs nav-justified">
+                                    <li class="active"><a data-toggle="tab" href="#category_tab">Category</a></li>
+                                    <li><a data-toggle="tab" href="#brand_tab">Brand</a></li>
+                                    <li><a data-toggle="tab" href="#product_tab">Product</a></li>
+                                    <li><a data-toggle="tab" href="#stock_tab">Stock</a></li>
+                                </ul>
+                            </div>
+
+                            <div class="tab-content"><br><br>
+                                <div id="category_tab" class="tab-pane fade in active">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="newstaff">
+                                            <div class="head1">
+                                                <span><b>Category List</b></span>
+                                                <span class="pull-right" style="margin-bottom: 15px;"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalCategory"><i class="fa fa-plus"></i>  Add</button></span>
+                                            </div>
+                                            <div class="searching" >
+                                                <div class="col-md-12" style="margin-left: -15px">
+                                                    <div class="input-group" style="width:250px">
+                                                        <input type="text" class="form-control input-sm" ng-model="searchCategory" placeholder="Search">
+                                                        <span class="input-group-btn">
+                                                            <button class="browse btn btn-sm" type="button"> <i class="fa fa-search"></i>
+                                                            </button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 body1 bg-white">
+                                                <table class="table table-striped table-condensed">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="col-md-3">#</th>
+                                                            <th class="col-md-3">Name</th>
+                                                            <th class="col-md-3">Status</th>
+                                                            <th class="col-md-3">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="nav-justified" dir-paginate="oneCategory in category_list|filter: searchCategory|itemsPerPage:10" pagination-id="category_page">
+                                                            <td>{{oneCategory.id_modified}}</td>
+                                                            <td class="text-uppercase">{{oneCategory.category_name}}</td>
+                                                            <td>
+                                                                <div class="btn-group" id="status" data-toggle="buttons">
+                                                                    <label class="btn btn-default btn-on btn-xs" ng-class='{
+                                                                    "active": oneCategory.status == "1"}' ng-click="editStatusCategory(oneCategory.status,oneCategory.id)" >
+                                                                        <input type="radio" value="1" name="multifeatured_module[module_id][status]" checked="checked" >
+                                                                        ON</label>
+                                                                    <label class="btn btn-default btn-off btn-xs" ng-class='{
+                                                                    "active": oneCategory.status == "0"}' ng-click="editStatusCategory(oneCategory.status,oneCategory.id)">
+                                                                        <input type="radio" value="0" name="multifeatured_module[module_id][status]" >
+                                                                        OFF</label>
+                                                                </div>
+                                                            </td>
+                                                            <td><i class="fa fa-edit text-yellow" ng-click="correspondEditCategory('editCategName_modal'+$index,oneCategory.id,oneCategory.category_name)" data-toggle="modal" data-target="#editCategName_modal{{$index}}"  style="font-size: 20px; cursor: pointer;"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="pull-right" >
+                                                <dir-pagination-controls pagination-id="category_page"></dir-pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="brand_tab" class="tab-pane fade">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="newstaff">
+                                            <div class="head1">
+                                                <span><b>Brand List</b></span>
+                                                <span class="pull-right" style="margin-bottom: 15px;"><button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalBrand"><i class="fa fa-plus"></i>Add</button></span>
+                                            </div>
+                                            <div class="searching">
+                                                <div class="col-md-12" style="margin-left: -15px">
+                                                    <div class="input-group" style="width:250px">
+                                                        <input type="text" class="form-control input-sm" ng-model="searchBrand" placeholder="Search">
+                                                        <span class="input-group-btn">
+                                                            <button class="browse btn btn-sm" type="button">
+                                                                <i class="fa fa-search"></i>
+                                                            </button> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 body1 bg-white">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Name</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr dir-paginate="oneBrand in brand_list|filter: searchBrand|itemsPerPage:6" pagination-id="brand_page">
+                                                            <td>{{oneBrand.id_modified}}</td>
+                                                            <td class="text-uppercase">{{oneBrand.brand_name}}</td>
+                                                            <td>
+                                                                <div class="btn-group" id="status" data-toggle="buttons">
+                                                                    <label class="btn btn-default btn-on btn-xs" ng-class='{
+                                                                    "active": oneBrand.status == "1"}' ng-click="editStatusBrand(oneBrand.status,oneBrand.id)" >
+                                                                        <input type="radio" value="1" name="multifeatured_module[module_id][status]" checked="checked" >
+                                                                        ON</label>
+                                                                    <label class="btn btn-default btn-off btn-xs" ng-class='{
+                                                                    "active": oneBrand.status == "0"}' ng-click="editStatusBrand(oneBrand.status,oneBrand.id)">
+                                                                        <input type="radio" value="0" name="multifeatured_module[module_id][status]" >
+                                                                        OFF</label>
+                                                                </div>
+                                                            </td>
+                                                            <td><i class="fa fa-edit text-yellow" ng-click="correspondEditBrand('editBrandName_modal'+$index,oneBrand.id,oneBrand.brand_name)" data-toggle="modal" data-target="#editBrandName_modal{{$index}}"  style="font-size: 20px; cursor: pointer;"></i></td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="btn-group pull-left" style="width: 100%">
+                                                    <dir-pagination-controls pagination-id="brand_page"></dir-pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="product_tab" class="tab-pane fade">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <div class="allstaff">
+                                            <div class="col-md-12" style="margin: 5px 0px 10px -5px;">
+                                                <div class="col-md-4 dropdown">
+                                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown"><i class="fa fa-plus"></i>  Action Add <span class="caret"></span></button>
+                                                    <ul class="dropdown-menu">
+                                                        <li ng-click="supplierList(); productList()"><a href="#" id="add_in_stock_link">Add in Stock</a></li>
+                                                        <li><a href="#" id="view_added_detailed_link">View Added in Stock</a></li>
+                                                        <li><a href="#" id="view_in_resume_link">View in Resume</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="col-md-4 text-center">
+                                                    <button type="button" class="btn btn-success"><i class="fa fa-plus"></i>  View All</button>
+                                                </div>
+
+                                                <div class="col-md-4 text-right">
+                                                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModalProduct"><i class="fa fa-plus"></i>  Add Product</button>
+                                                </div>
+                                            </div>
+                                            <div id="view_in_resume_div" style="padding: 0 0 0 0" >
+                                                <div class="searching">
+                                                    <div class="col-md-12">
+                                                        <div class="input-group" style="width:180px">
+                                                            <input type="text" class="form-control input-sm" ng-model="searchProduct" placeholder="Search">
+                                                            <span class="input-group-btn">
+                                                                <button class="browse btn btn-sm" type="button">
+                                                                    <i class="fa fa-search"></i>
+                                                                </button> </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tata">
+                                                    <table class="table table-striped">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>#</th>
+                                                                <th>Name</th>
+                                                                <th>Description</th>
+                                                                <th>Balance</th>
+                                                                <th>Detail</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr style="cursor: pointer;" dir-paginate="oneProduct in product_list|filter:searchProduct|itemsPerPage:7" pagination-id="product_page">
+                                                                <td>{{oneProduct.id_modified}}</td>
+                                                                <td class="text-uppercase">{{oneProduct.categoryName}} {{oneProduct.brandName}} {{oneProduct.pname}}</td>
+                                                                <td>{{oneProduct.description}}</td>
+                                                                <td>5</td>
+                                                                <td class="text-uppercase">
+                                                                    <span ng-repeat="proEx in existing_productList">
+                                                                        <span ng-if="proEx.id_product === oneProduct.id">
+                                                                            <button type="button" class="btn-success" data-toggle="modal" data-target="#proDetails_modal{{$index}}" ng-click="correspondMoreProdDetails('proDetails_modal'+$index,oneProduct.id)"><i class="fa fa-eye"></i>  More </button>
+                                                                        </span>
+                                                                    </span>
+                                                                </td>
+                                                                <td><i class="fa fa-pencil text-orange"></i>&nbsp;&nbsp;
+                                                                    <i class="fa fa-close text-red"></i>&nbsp;&nbsp;
+                                                                    <i class="fa fa-plus text-olive" ng-click="correspondAddToStock('addToStock_modal'+$index,oneProduct.id)" data-toggle="modal" data-target="#addToStock_modal{{$index}}" ></i>&nbsp;&nbsp;
+                                                                    <span ng-repeat="proEx in existing_productList">
+                                                                        <span ng-if="proEx.id_product === oneProduct.id">
+                                                                            <i class="fa fa-minus text-teal" data-toggle="modal" data-target="#rmvToStock_modal{{$index}}" ng-click="correspondRemoveToStock('rmvToStock_modal'+$index,oneProduct.id)"></i>&nbsp;&nbsp;
+                                                                        </span>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <div class="btn-group pull-left" style="width: 100%">
+                                                        <dir-pagination-controls pagination-id="product_page"></dir-pagination-controls>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 bg-white" style="padding: 0 0 0 0" id="view_added_detailed_div" hidden>
+                                                <table class="table table-striped table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Date</th>
+                                                            <th>Name</th>
+                                                            <th>Description</th>
+                                                            <th>Quantity</th>
+                                                            <th>Purchasing P</th>
+                                                            <th>Selling P</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                           <td>view added in detail</td>
+                                                           <td>eweww</td> 
+                                                           <td>eweww</td> 
+                                                           <td>eweww</td> 
+                                                           <td>eweww</td> 
+                                                           <td>eweww</td> 
+                                                           <td>eweww</td> 
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-12 bg-white" style="padding: 0 0 0 0" id="add_in_stock_div" hidden>
+                                                <form class="col-md-12" ng-repeat="field in inputs track by $index">
+                                                    <div class="form-group col-md-3">
+                                                   <!--      <select class="form-control input-sm" ng-model="tasks.supp[$index]" ng-options="sup.supplier_name for sup in supplier_list">
+                                                        </select> --> 
+                                                         <select class="form-control input-sm" ng-model="tasks.supp[$index]">
+                                                         <option value="">Supplier</option>
+                                                            <option ng-repeat="su in supplier_list" value={{su.id}}>
+                                                                {{su.supplier_name}}
+                                                            </option>
+                                                        </select> 
+                                                    </div>
+
+                                                    <div class="form-group col-md-3">
+                                                     <!--    <select class="form-control input-sm" ng-model="tasks.prod[$index]" ng-options="p.pname for p in product_list" >
+                                                        </select> -->
+                                                            <select class="form-control input-sm" ng-model="tasks.prod[$index]">
+                                                            <option value="">Product</option>
+                                                            <option ng-repeat="pro in product_list" value={{pro.id}}>
+                                                                {{pro.pname}}
+                                                            </option>
+                                                        </select> 
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                        <input type="number" class="form-control input-sm" ng-model="tasks.qnt[$index]" placeholder="Qnty">
+                                                    </div>
+                                                    <div class="form-group col-md-2">
+                                                        <input type="text" class="form-control input-sm"  ng-model="tasks.purch[$index]" placeholder="Purchasing Price">
+                                                    </div>
+                                                    <div class="form-group col-md-2" >
+                                                        <input type="text" class="form-control input-sm" ng-model="tasks.sell[$index]" placeholder="Selling Price">
+                                                    </div>
+                                                    <div class="form-group col-md-1">
+                                                        <button type="button" class="btn btn-success btn-small" ng-if="$index == inputs.length - 1" ng-click="addInput()"><i class="fa fa-plus"></i>
+                                                        </button>
+                                                        <button type="button" class="btn btn-danger btn-small" ng-if="$index != inputs.length - 1" ng-click="removeInput($index)">
+                                                        <i class="fa fa-minus"> </i></button>
+                                                    </div>
+                                                </form>
+                                                <button type="button" class="btn btn-primary" ng-click="saveSupplier($index,suppliers.id,products.id,quantities,purchasings,sellings)">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="stock_tab" class="tab-pane fade">
+                                    <div class="col-md-12">
+                                        <h3>Menu 2</h3>
+                                        <p>Some content in menu 2.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="container-fluid englobe" id="stock_content" hidden>
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="box box-solid">
+                                  <div class="box-header with-border box-headingz text-center text-white ">
+                                    <h3 class="box-title text-bold">Add to Stock</h3>                                     
+                                    </div>
+                                  <div class="box-body">
+                                    <form id="addToStock_form">
+                                        <div class="form-group">
+                                            <label>Select Product </label>    
+                                             <select class="form-control" ng-model="prodToAdd" ng-options="p.pname for p in product_list">
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <input type="number" min="1" ng-model="added_qnty" class="form-control" placeholder="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Unit Price</label>
+                                            <input type="text" ng-model="added_up" class="form-control" placeholder="50,000">
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="box-footer">
+                                     <button type="submit" ng-click="addProductToStock(prodToAdd.id,added_qnty,added_up)" class="btn btn-primary pull-right" style="width: 100px;"> <i class="fa fa-plus-square"></i>&nbsp;&nbsp; Add</button>
+                                  </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="box box-solid">
+                                  <div class="box-header with-border box-headingz text-center text-white">
+                                    <h3 class="box-title text-bold">Remove to Stock</h3>
+                                    <div class="box-tools pull-right">
+                                      <span class="label label-danger" ng-show="showProNbr">{{product_number}}</span>
+                                    </div>
+                                  </div>
+                                  <div class="box-body">
+                                   <form id="removeToStock_form">
+                                        <div class="form-group">
+                                            <label>Select Product </label>    
+                                            <select class="form-control" ng-model="prodToRemove" ng-options="p.pname for p in existing_productList" ng-change="stockProductNbr(prodToRemove.id_product)">
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Quantity</label> <span class="text-danger text-bold" id="nbr_warning"></span>
+                                            <input type="number" min="1" ng-model="removed_qnty" ng-blur="rmvNbrValidation(removed_qnty)" class="form-control" placeholder="5">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Destination</label>
+                                            <select class="form-control" ng-model="selectedDestination">
+                                                <option value="vente" ng-click="hideDescription()">Vente</option>
+                                                <option value="other" ng-click="showDescription()">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group" ng-show="showMe">
+                                            <textarea class="form-control" ng-model="Destination" placeholder="Destination" rows="2"></textarea>
+                                        </div>
+                                    </form>
+                                  </div>
+                                  <div class="box-footer">
+                                     <button type="submit" class="btn btn-primary pull-right" id="remove_btn" ng-click="removeProductToStock(prodToRemove.id_product,removed_qnty,selectedDestination,Destination)" style="width: 100px;"> <i class="fa fa-minus-square"></i>&nbsp;&nbsp; Remove</button>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="bg-white">
+                                    <div class="searching">
+                                        <div class="input-group" style="width:200px">
+                                            <input type="text" class="form-control input-sm" ng-model="searchInStock" placeholder="Search">
+                                            <span class="input-group-btn">
+                                                <button class="browse btn btn-sm" type="button">
+                                                    <i class="fa fa-search"></i>
+                                                </button> </span>
+                                        </div>
+                                    </div>
+                                    <div style="padding: 15px;">
+                                        <table class="table table-striped table-hover bg-white">
+                                            <thead>
+                                                <tr>
+                                                    <th>Product</th>
+                                                    <th>Category</th>
+                                                    <th>Brand</th>
+                                                    <th>Quantity</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr dir-paginate="oneStock in stock_List|filter: searchInStock|itemsPerPage:6" pagination-id="stock_page">
+                                                    <td class="text-uppercase">{{oneStock.pname}}</td>
+                                                    <td class="text-uppercase">{{oneStock.category_name}}</td>
+                                                    <td class="text-uppercase">{{oneStock.brand_name}}</td>
+                                                    <td>{{oneStock.total_quantity}}</td>
+                                                    <td class="text-bold">
+                                                        <span ng-if="oneStock.total_quantity>2">
+                                                            <span class="text-success">
+                                                                <i class="fa fa-thumbs-o-up"></i> perfecto!!
+                                                            </span>
+                                                        </span>
+                                                        <span ng-if="oneStock.total_quantity<=2">
+                                                            <span class="text-danger">
+                                                                <i class="fa fa-thumbs-o-down"></i> attention!!
+                                                            </span>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <dir-pagination-controls pagination-id="stock_page"></dir-pagination-controls>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid englobe" id="inventory_content" hidden>
+                <div class="row" >
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <ul class="nav nav-pills col-md-12 page-header box-headingz">
+                                    <li class="active col-md-5" style="margin-left: 60px;"><a data-toggle="pill" href="#new_inventory"><b>New Inventory</b></a></li>
+                                    <li class="col-md-5" style="margin-left: 80px;"><a data-toggle="pill" href="#list_inventory"><b>List of Inventory</b></a></li>
+                                </ul> 
+                                <div class="tab-content col-md-12">
+                                    <div id="new_inventory" class="tab-pane fade in active col-md-12 bg-white">
+                                        <h3>New Inventory</h3>
+                                        <div class="form-group col-md-3 pull-left">
+                                            <div id="datepicker1" class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" >
+                                                <input  class="form-control" placeholder=" Date" type="date"/>
+                                                <span class="input-group-addon bg-blue"><i class="fa fa-th-list"></i></span>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-success" style="margin-left: 15px"><i class="fa fa-external-link"></i> Start</button>
+                                        <div class="table-responsive">
+                                            <table class="table table-striped table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Product Name</th>
+                                                        <th>Product Counted</th>
+                                                        <th>Date</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>ideapad 110</td>
+                                                        <td>
+                                                            <input type="text" class="form-control input-sm" style="width: 100px;">
+                                                        </td>
+                                                        <td>2017-01-02</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ideapad 110</td>
+                                                        <td>
+                                                            <input type="text" class="form-control input-sm" style="width: 100px;">
+                                                        </td>
+                                                        <td>2017-01-02</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ideapad 110</td>
+                                                        <td>
+                                                            <input type="text" class="form-control input-sm" style="width: 100px;">
+                                                        </td>
+                                                        <td>2017-01-02</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ideapad 110</td>
+                                                        <td>
+                                                            <input type="text" class="form-control input-sm" style="width: 100px;">
+                                                        </td>
+                                                        <td>2017-01-02</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>ideapad 110</td>
+                                                        <td>
+                                                            <input type="text" class="form-control input-sm" style="width: 100px;">
+                                                        </td>
+                                                        <td>2017-01-02</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <div class="pull-right">
+                                                <ul class="pagination">
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="list_inventory" class="tab-pane fade col-md-12">
+                                        <h3>List of Inventory</h3>
+                                        <p>Some content in list inventory.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>    
+
+
+<!--****************************************************** ALL MODALS ***************************-->
+
+        <!-- ************************Add category modal******************************** -->
+            <div class="modal fade" id="myModalCategory" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a Category</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addCateg_form">
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Category Name" id="Categ_name">
+                          </div>
+                          <div class="form-group">
+                              <button type="button" class="btn btn-primary" ng-click="saveCategory()"><i class="fa fa-plus"></i> Save</button>
+                          </div>
+                          <div>
+                        <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_cat" style="text-align:left;display:none">
+                            <strong> <i class="fa fa-times-circle"></i></strong> <span id="isa_error_message_cat"></span>
+                        </div>
+                        <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_cat" style="text-align:left;display:none">
+                            <span id="isa_success_message_cat">please wait...</span>
+                        </div>
+                    </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+
+        <!-- ************************Add BRAND modal******************************** -->
+            <div class="modal fade" id="myModalBrand" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a Brand</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addBrand_form">
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Brand Name" id="brand_name">
+                          </div>
+                          <div class="form-group">
+                              <button type="button" class="btn btn-primary" ng-click="saveBrand()"><i class="fa fa-plus"></i> Save</button>
+                          </div>
+                          <div>
+                        <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_brand" style="text-align:left;display:none">
+                            <strong> <i class="fa fa-times-circle"></i></strong> <span id="isa_error_message_brand"></span>
+                        </div>
+                        <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_brand" style="text-align:left;display:none">
+                            <span id="isa_success_message_brand">please wait...</span>
+                        </div>
+                    </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+
+        <!-- ************************Add PRODUCT modal******************************** -->
+            <div class="modal fade" id="myModalProduct" role="dialog">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a Product</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addProd_form">
+                      <div id="add_prod_step1">
+                          <div class="form-group">
+                              <input type="text" class="form-control" placeholder="Product Name" ng-model="product_name_single">
+                          </div>
+                          <div class="form-group">
+                             <textarea class="form-control" placeholder="Product description" ng-model="product_description_single" rows="3"></textarea>
+                          </div>
+                          <div class="form-group">
+                            <p> Select category </p>
+                              <select class="form-control" ng-model="selectedCategory_single" ng-options="x.category_name for x in category_list" >
+                              </select>
+                          </div>
+                          <div class="form-group">
+                            <p> Select Brand </p>
+                              <select class="form-control" ng-model="selectedBrand_single" ng-options="x.brand_name for x in brand_list">
+                              </select>
+                          </div>
+                          <div class="form-group pull-left">
+                              <button type="button" class="btn btn-primary" id="addProd_nextBtn" ng-click="supplierList(); saveProduct(product_name_single,product_description_single,selectedCategory_single.id,selectedBrand_single.id)"> Next <i class="fa fa-arrow-right"></i></button>
+                          </div>
+                      </div>
+                      <div id="add_prod_step2" hidden>
+                          <div class="form-group">
+                            <p style="display: none;"> {{last_product.id}}</p>
+                            <p> Select Supplier </p>
+                              <select class="form-control" ng-model="selected_product_supplier" ng-options="supplier.supplier_name for supplier in supplier_list" >
+                              </select>
+                          </div>
+                          <div class="form-group">
+                            <p> Quantity</p>
+                              <input type="number" class="form-control" placeholder="Product Quantity eg: 45" ng-model="product_quantity_single">
+                          </div>
+                          <div class="form-group">
+                            <p> Purchasing Price </p>
+                              <input type="text" class="form-control" placeholder="eg: 45000" ng-model="product_purchasingP_single">
+                          </div>
+                          <div class="form-group">
+                            <p> Selling Price </p>
+                              <input type="text" class="form-control" placeholder="eg: 48000" ng-model="product_sellingP_single">
+                          </div>
+                          <div class="form-group">
+                              <button type="button" class="btn btn-primary" id="productSave_btn"><i class="fa fa-plus"></i> Save</button>
+                          </div>
+                          <!-- <div class="form-group">
+                              <button type="button" class="btn btn-primary" id="productSave_btn" ng-click="RegisterProductAndAddProductToStock(last_product.id,product_name,selectedCategory.id,selectedBrand.id)"><i class="fa fa-plus"></i> Save</button>
+                          </div> -->
+                      </div>
+                          
+                      <div>
+                        <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_prod" style="text-align:left;display:none">
+                            <strong> <i class="fa fa-times-circle"></i></strong> <span id="isa_error_message_prod"></span>
+                        </div>
+                        <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_prod" style="text-align:left;display:none">
+                            <span id="isa_success_message_prod">please wait...</span>
+                        </div>
+                      </div>
+                      </form>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  
+                </div>
+            </div>
+
+        <!-- ************************ Add To Stock Modal ******************************* -->
+            <div id="{{mycorrespondedAddToStock}}" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Add a Brand</h4>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addToStock_form_modal">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{productId_added}}" style="display: none;">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label>
+                            <input type="number" min="1" ng-model="added_qnty_modal" class="form-control" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label>Unit Price</label>
+                            <input type="text" ng-model="added_up_modal" class="form-control" placeholder="50,000">
+                        </div>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" ng-click="addProductToStockModal(productId_added,added_qnty_modal,added_up_modal)" class="btn btn-primary pull-left" style="width: 100px;"> <i class="fa fa-plus-square"></i>&nbsp;&nbsp; Add</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+        <!-- ************************** Edit Category Modal ******************* -->
+            <div id="{{mycorrespondedEditCategory}}" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Edit Category</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_editCategory" style="text-align:left;display:none">
+                                <strong> <i class="fa fa-times-circle"></i></strong> <span id="isa_error_message_editCategory"></span>
+                            </div>
+                            <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_editCategory" style="text-align:left;display:none">
+                                <span id="isa_success_message_editCategory">please wait...</span>
+                            </div>
+                        </div>
+                        <form id="editCategoryName_form">
+                            <div class="form-group">
+                                <span style="display: none;"> {{categoryId}} </span>
+                            </div>
+                            <div class="form-group">
+                                <label>New Name</label>
+                                <input type="text" class="form-control" ng-model="categoryCurrentName" >
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" ng-click="editCategoryName(categoryId,categoryCurrentName)" class="btn btn-primary pull-left" style="width: 100px;"> <i class="fa fa-edit"></i> Edit</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+          <!-- ************************** Edit Brand Modal ******************* -->
+            <div id="{{mycorrespondedEditBrand}}" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Edit Brand</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_editBrand" style="text-align:left;display:none">
+                                <strong> <i class="fa fa-times-circle"></i></strong> <span id="isa_error_message_editBrand"></span>
+                            </div>
+                            <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_editBrand" style="text-align:left;display:none">
+                                <span id="isa_success_message_editBrand">please wait...</span>
+                            </div>
+                        </div>
+                        <form id="editBrandName_form">
+                            <div class="form-group">
+                                <span style="display: none;"> {{brandId}} </span>
+                            </div>
+                            <div class="form-group">
+                                <label>New Name</label>
+                                <input type="text" class="form-control" ng-model="brandCurrentName" >
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                         <button type="submit" ng-click="editBrandName(brandId,brandCurrentName)" class="btn btn-primary pull-left" style="width: 100px;"> <i class="fa fa-edit"></i> Edit</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+            </div>
+
+
+        <!-- ************************ Remove To Stock Modal *************************** -->
+              <div id="{{mycorrespondedRemoveToStock}}" class="modal fade">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Remove Product to Stock <span class="pull-right bg-red" style="margin-right: 25px; padding: 10px;">{{product_number}}</span></h4>
+                    </div>
+                    <div class="modal-body">
+                      <form id="addToStock_form_modal">
+                        <div class="form-group">
+                            <input type="text" class="form-control" value="{{productId_rmvd}}" style="display: none;">
+                        </div>
+                        <div class="form-group">
+                            <label>Quantity</label> <span class="text-danger text-bold" id="nbr_warning_modal"></span>
+                            <input type="number" min="1" ng-model="removed_qnty_modal" ng-blur="rmvNbrValidation(removed_qnty_modal)" class="form-control" placeholder="5">
+                        </div>
+                        <div class="form-group">
+                            <label>Destination</label>
+                            <select class="form-control" ng-model="selectedDestination_modal">
+                                <option value="vente" ng-click="hideDescription()">Vente</option>
+                                <option value="other" ng-click="showDescription()">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group" ng-show="showMe">
+                            <textarea class="form-control" ng-model="Destination_modal" placeholder="Destination" rows="2"></textarea>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="modal-footer">
+
+                    <button type="submit" class="btn btn-primary pull-left" id="remove_btn_modal" ng-click="removeProductToStockModal(productId_rmvd,removed_qnty_modal,selectedDestination_modal,Destination_modal)" style="width: 100px;"> <i class="fa fa-minus-square"></i>&nbsp;&nbsp; Remove</button>
+
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ************************ PRODUCT DETAIL MODAL ***************************** -->
+              <div id="{{prodDetailsModal}}" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Product in Details</h4>
+                      </div>
+                      <div class="modal-body">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>DATE</th>
+                                    <th>IN</th>
+                                    <th>OUT</th>
+                                    <th>BALANCE</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr dir-paginate="proD in product_details|itemsPerPage:5" pagination-id="prodDetails_page">
+                                    <td>{{proD.regdate}}</td>
+                                    <td>{{proD.quantity_entry}}</td>
+                                    <td>{{proD.quantity_out}}</td>
+                                    <td>{{proD.total_quantity}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group pull-left statSub" style="width: 100%">
+                            <dir-pagination-controls pagination-id="prodDetails_page"></dir-pagination-controls>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/application.js"></script>
+    <script src="../js/services.js"></script>
+    <script src="../js/dirPagination.js"></script>
+    <script src="../js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script src="../js/jquery.toaster.js"></script>
+    <script src="../js/simple-autocomplete.js"></script>
+    <script src="../js/bootstrap-datepicker.min.js"></script>
+    <script src="../js/datepicker.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#items_link_id").click(function() {
+                $("#item_content").show();
+                $("#stock_content").hide();
+                $("#inventory_content").hide();
+            });
+
+            $("#stock_link_id").click(function() {
+                $("#item_content").hide();
+                $("#stock_content").show();
+                $("#inventory_content").hide();
+            });
+            $("#inventory_link_id").click(function() {
+                $("#item_content").hide();
+                $("#stock_content").hide();
+                $("#inventory_content").show();
+            });
+            $("#view_in_resume_link").click(function() {
+                $("#view_in_resume_div").show();
+                $("#view_added_detailed_div").hide();
+                $("#add_in_stock_div").hide();
+            });
+            $("#view_added_detailed_link").click(function() {
+                $("#view_in_resume_div").hide();
+                $("#view_added_detailed_div").show();
+                $("#add_in_stock_div").hide();
+            });
+            $("#add_in_stock_link").click(function() {
+                $("#view_in_resume_div").hide();
+                $("#view_added_detailed_div").hide();
+                $("#add_in_stock_div").show();
+            });
+            $("#addProd_nextBtn").click(function() {
+                $("#add_prod_step1").hide();
+                $("#add_prod_step2").show();
+            });
+            $("#productSave_btn").click(function() {
+                $("#add_prod_step1").show();
+                $("#add_prod_step2").hide();
+            });
+        });
+    </script>
+
+    </body>
+</html>       

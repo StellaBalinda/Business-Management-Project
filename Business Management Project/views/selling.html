@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ALPHA | SELLING</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/AdminLTE.css" rel="stylesheet">
+        <link href="../css/sweetalert.css" rel="stylesheet">
+        <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/user.css" rel="stylesheet">
+  
+  <style type="text/css">
+
+    #space {
+    margin-top:20px
+	}
+	#example1 {
+    background-color: lightblue;
+	}
+    </style>
+</head>
+<body class="hold-transition skin-blue sidebar-mini" ng-app="myAlpha" ng-controller="Ctr_Selling" ng-init="startSelling()">
+  <div class="wrapper">
+
+    <header class="main-header headers">
+        <a href="#" class="logo">
+            <span class="logo-lg" ><img src="../images/logo.png" height="90" width="150"></span>
+        </a>
+        <div class="btn pull-right logout" ng-click="logout()" style="padding-top:40px; " ><a href="#" class="btn btn-primary" style="font-size: 18px">Logout <i class="fa fa-2x fa-sign-out fa-lg"></i></a></div>
+    </header>
+
+     <aside class="main-sidebar " >
+        <section class="sidebar">
+            <ul class="sidebar-menu">
+                <li class="treeview" id="sell_link_id">
+                    <a href="#">
+                        <span><i class="fa fa-money"></i> &nbsp;SELLING</span>          
+                    </a>
+                </li>
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper">
+        <!-- <section class="content-header">
+          <h1>
+             Cash Register
+          </h1>
+        </section> -->
+
+        <section class="content">
+          <div class="box box-info">
+            <div class="box-header with-border clearfix">
+              <h3 class="box-title">User Fields</h3>
+               <span class="badge text-red text-bold" style="background-color: #fff; font-size: 18px;position: absolute;right: 800px;top:10px;">{{saleStockPro.quantity}} items</span>
+            </div>
+
+            <form class="form-horizontal">
+              <div class="box-body">
+                <div class="form-group">
+                    <div class="col-sm-2">
+                      <input type="text" class="form-control" ng-model="invoice" placeholder="Invoice">
+                    </div>
+                    <div class="col-sm-2">
+                      <select class="form-control" ng-model="saleStockPro" ng-options="p.pname for p in saleStock_list" >
+                      </select>
+                    </div>
+          				  <div class="col-sm-2">
+                      <input type="text" class="form-control" ng-model="quantity" placeholder="QTY">
+                    </div>
+          				  <div class="col-sm-2">
+                      <input type="text" class="form-control" ng-model="unityP" placeholder="UP">
+                    </div>
+            				<div class="col-sm-2">
+                      <select class="form-control" ng-model="custName" ng-options="c.customer_name for c in customer_list">
+                      </select>
+                      <span data-toggle="modal" data-target="#customer_name_modal" style="position: absolute;right: 0px;top:10px; cursor: pointer"><i class="fa fa-plus-circle"></i></span>
+                    </div>
+          				  <div class="col-sm-2">
+                      <select class="form-control" ng-model="payment">
+                        <option value="cash">Cash</option>
+                        <option value="credit">Credit</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="box-footer" ng-click="sellSaving(invoice,saleStockPro.id,quantity,unityP,custName.id,payment)">
+                  <button type="submit" class="btn btn-info pull-right" style="width: 120px;">Sell</button>
+                </div>
+                </div>
+            </form>
+          </div>
+      
+  	       <div class="row">
+              <div class="col-xs-12">
+               <div class="box" id="space">
+                  <div class="box-header">
+                    <h3 class="box-title">Data Table With Full Features</h3>
+                  </div>
+                  <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                      <thead>
+                      <tr>
+                        <th>DATE</th>
+                        <th>INVOICE NUMBER</th>
+                        <th>ITEMS</th>
+                        <th>UNITY PRICE</th>
+                        <th>QUANTITY</th>
+              				  <th>TOTAL PRICE</th>
+              				  <th>PAYMENT</th>
+              				  <th>CUSTOMER NAME</th>
+                      </tr>
+                      </thead>
+        				      <tbody>
+                        <tr dir-paginate="sale in sales_list|itemsPerPage:10" pagination-id="sales_page">
+                          <td>{{sale.regdate}}</td>
+                          <td>{{sale.invoice_number}}</td>
+                          <td>{{sale.pname}}</td>
+                          <td>{{sale.unit_price}}</td>
+                          <td>{{sale.quantity_sold}}</td>
+                				  <td>{{sale.total_amount}}</td>
+                				  <td>{{sale.payment_mode}}</td>
+                				  <td>{{sale.customer}}</td>
+                        </tr>
+                  		</tbody>
+                    </table>
+                    <div class="btn-group pull-left statSub" style="width: 100%">
+                        <dir-pagination-controls pagination-id="sales_page"></dir-pagination-controls>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </section>
+    </div>
+
+<!--     <footer class="main-footer">
+      <div class="pull-right hidden-xs">
+        Anything you want
+      </div>
+      <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+    </footer> -->
+  </div>
+
+  <!-- MODALS PART -->
+    <div class="container">
+      <div class="modal fade" id="customer_name_modal" role="dialog">
+        <div class="modal-dialog ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" style="color:white">
+                &times;
+              </button>
+              <h4 class="modal-title "><b> <i class="fa fa-plus-circle"></i> Add Customer Name</b></h4>
+            </div>
+            <div class="modal-body">
+              <div class="form-group">
+                <input class="form-control" ng-model="custNameModal" placeholder="Customer Name" />
+              </div>
+              <div class="form-group">
+                <div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_customer" style="text-align:left; display:none">
+                  <strong> <i class="fa fa-times-circle"></i></strong><span id="isa_error_message_customer"></span>
+                </div>
+                <div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_customer" style="text-align:left; display:none">
+                  <strong> <i class="glyphicon glyphicon-ok-circle"></i></strong><span id="isa_success_message_customer"></span>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer clearfix">
+              <button type="button" class="btn btn-primary pull-left" ng-click="addCustomer(custNameModal)">
+                <i class="fa fa-plus"></i> Add
+              </button>
+              <button type="button" class="btn btn-default" data-dismiss="modal" style="background-color:#3c8dbc;color:white">
+                Close
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+ 
+
+<script src="../js/jquery.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/angular.min.js"></script>
+<script src="../js/application.js"></script>
+<script src="../js/services.js"></script>
+<script src="../js/dirPagination.js"></script>
+<script src="../js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+<script src="../js/sweetalert.min.js"></script>
+<script src="../js/simple-autocomplete.js"></script>
+<script src="../js/jquery.toaster.js"></script>
+
+</body>
+</html>

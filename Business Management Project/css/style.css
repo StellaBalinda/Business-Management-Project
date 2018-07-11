@@ -1,0 +1,202 @@
+
+.bg{
+	background:#f0f0f0; 
+}
+.form-horizontal .control-label{
+	text-align:left;
+}
+.masthead{
+  background: #fff;
+  margin-top: 150px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  width: 800px;
+  margin-left: 300px;
+}
+.pic{
+  margin-bottom: 80px;
+}
+
+.headers{
+   -webkit-box-shadow: 0 2px 5px #aaa;
+  -moz-box-shadow: 0 2px 5px #aaa;
+  box-shadow: 0 2px 5px #aaa;
+  width: 100%;
+  height: 90px;
+  margin-bottom: 7px;
+  background-color: #173e43;
+}
+.englobe {
+  background-color: #F0F0F0; 
+  color:#000;
+  padding: 1% 1% 1% 1%;
+  margin: 15px;  
+  /*margin-bottom: 35px;*/
+}
+.statSub{
+  background-color: #fff; 
+  padding: 5px;
+}
+.logout a{
+  color:#fff;
+}
+.logout a:hover{
+  color:#ff0;
+  border: none; 
+}
+.sidebar{
+  width:100%; 
+  position: absolute;
+  top: 110px;
+
+}
+.main-sidebar{
+  background: #173e43;
+}
+.sidebar-menu .active{
+ /* border-left: 3px solid #909090;*/
+  background: #e15b5b;
+  color:#fff; 
+}
+.sidebar-menu .active a:active{
+  color:#fff;  
+}
+.sidebar-menu a:hover{
+  border-left: 5px solid #e15b5b;
+  color:#fff; 
+}
+.sidebar-menu .active a:hover{
+  background: #909090;
+  color:#fff;
+}
+.sidebar-menu .treeview {  /* this is side-menu when hover background change */
+  /*background-color:#3fb0ac;*/
+  margin-bottom: 10px;
+}
+.sidebar-menu .treeview a {  /* this is side-menu when hover background change */
+  font-size: 16px;
+}
+.sidebar-menu .treeview a:hover{  /* this is side-menu when hover background change */
+  background-color:#4ABDAC;
+}
+
+.footer_other{
+  border-top: 1px solid #aaaaaa;
+  padding:15px;
+  font-family:'Open Sans',Arial,sans-serif;
+  font-size: 10px;
+  color: #f0f0f0;
+  width: 100%;
+  position: absolute;
+  top: 500px;
+  background: #173e43;
+}
+
+.nav-tabs{ 
+  background-color:#4ABDAC;
+}
+
+a{  
+  color: #fff;
+}
+.nav-tabs > li > a{
+  border-radius: 0;
+  padding: 8px 50px;
+  border:0px;
+}
+.nav-tabs > li > a:hover, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover  {
+background-color:#3fb0ac;	
+color:#fff;
+border: 0px;
+border-bottom:2px solid  #173e43;
+}
+
+.nav .nav-tabs > li > a:focus {
+/*background-color:#F0F0F0;	
+color:#e15b5b;*/
+border: 0px;
+border-bottom:2px solid  #173e43;	
+}
+
+.nav .nav-tabs > li.active > a {
+/*background-color:#F0F0F0;
+color:#e15b5b;*/
+border: 0px;
+border-bottom:2px solid  #173e43;
+}
+
+
+/*.btn{
+  background-color: #173e43;  
+  border: 1px solid #173e43;
+  color: #fff;
+}
+.btn:hover{
+  background-color: #173e43;  
+  border: 1px solid #173e43;
+  opacity: .9;
+}
+.btn:active{
+  background-color: #173e43;  
+  border: 1px solid #173e43;
+  opacity: .9;
+}
+.btn:focus{
+  background-color: #173e43;  
+  border: 1px solid #173e43;
+  opacity: .9;
+}*/
+.bg-white{
+  background-color: #fff;
+}
+/*
+.btn2{
+  background-color: #4040a1;  FC4A1A
+}*/
+
+
+/* this is for error message and success message*/
+
+
+/* Switch button */
+.btn-default.btn-on.active{background-color: #5BB75B;color: white;}
+.btn-default.btn-off.active{background-color: #DA4F49;color: white;}
+
+.btn-default.btn-on-1.active{background-color: #006FFC;color: white;}
+.btn-default.btn-off-1.active{background-color: #DA4F49;color: white;}
+
+.btn-default.btn-on-2.active{background-color: #00D590;color: white;}
+.btn-default.btn-off-2.active{background-color: #A7A7A7;color: white;}
+
+.btn-default.btn-on-3.active{color: #5BB75B;font-weight:bolder;}
+.btn-default.btn-off-3.active{color: #DA4F49;font-weight:bolder;}
+
+.btn-default.btn-on-4.active{background-color: #006FFC;color: #5BB75B;}
+.btn-default.btn-off-4.active{background-color: #DA4F49;color: #DA4F49;}
+
+
+.isa_info, .isa_success, .isa_warning, .isa_error {
+    margin: 10px 0px;
+    padding:12px;
+}
+.isa_info {
+    color: #00529B;
+    background-color: #BDE5F8;
+}
+.isa_success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+}
+.isa_warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+}
+.isa_error {
+    color: #D8000C;
+    background-color: #FFBABA;
+}
+.isa_info i, .isa_success i, .isa_warning i, .isa_error i {
+    margin:10px 22px;
+    font-size:2em;
+    vertical-align:middle;
+}
+

@@ -1,0 +1,317 @@
+/* to make angular load after page has loaded*/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+.pic{
+	margin-top: -35px;
+        position: relative;
+}
+.pic1{
+	border:2px solid #fff;
+}
+.pic:hover .edit-pic {
+	display: block;
+}
+.pic:hover .pic1{
+	opacity: 0.7;
+}
+
+.edit-pic {
+	position: absolute;
+	display: none;
+    left:48%;
+    bottom:20%;
+}
+
+.pic .edit-pic a {
+	color: #277A9C;
+}
+
+.lili a{
+	color: #242c34;
+	margin-top: 23px;
+}
+.colorred{
+	background: #e74c3c;
+	padding: 5px;
+}
+.coloryellow{
+	background: #fec107;
+	padding: 5px;
+}
+.down{
+	background: #277A9C;
+	height: 90px;
+	width: 90px;
+	color: white;
+	padding: 30px;
+	
+}
+
+
+.comp{
+	background: #277A9C;
+	color: #fff;
+}
+.box{
+	border-top-color: #277A9C;
+}
+.ss{
+	padding: 0px;
+	font-size: 20px;
+}
+.sss{
+	padding: 0px 0px 2px 0px;
+	background: #277A9C;
+	text-align: center;
+	color: #fff;
+
+}
+.tablee .active{
+	font-weight: bold;
+}
+.theheader{
+	background: #242c34;
+	color: #fff;
+	padding: 10px 5px;
+	font-size: 20px;
+}
+.papa{
+	padding: 0px 0px 0px 20px;
+}
+.thebody{
+	background: #fff;
+	height: 350px;
+	padding: 10px;
+}
+.trtr{
+	padding: 7px 0px;
+	font-size: 	15px;
+	border-bottom:1px solid #dddddd;
+}
+.doc1{
+	margin: 10px 0px;
+	border: 1px solid #ddd;
+	padding: 15px 0px 5px 0px;
+}
+.files{
+
+	color:#ddd;
+	padding: 10px;
+}
+.thebottom{
+	height: 45px;
+	text-align: center;
+	font-size: 17px;
+	background: #277A9C;
+	padding: 10px 0px 5px 0px;
+}
+.thebottom a{
+	color: #fff;
+}
+.sendi{
+	padding: 5px 20px;
+ 	margin: 10px 0px;
+	color: #fff;
+	background: #277A9C;
+}
+.tabss{
+	border-bottom:1px solid #ddd;
+}
+.comp1{
+	margin-bottom: 30px;
+}
+@media(max-width:765px) {
+
+.comp1{
+	margin-top: 10px;
+	padding: 10px;
+}
+.down{
+	background: #277A9C;
+	height: 50px;
+	width: 70px;
+	color: white;
+	padding: 10px;
+	margin-top: 20px;
+	
+}
+
+}
+
+ul .tabss a:hover{
+	background:rgba(255, 255,255, 0.3);
+	font-weight: bold;
+}
+/* new designs */
+
+.colo{
+	padding: 20px;
+}
+.newrecord{
+	background: #fff;
+	height: 350px;
+	border-top: 3px solid #277A9C;
+	border-radius: 2px;
+}
+.newstaff{
+	background: #fff;
+	/*height: 640px;*/
+	height: 520px;
+	border-top: 3px solid #277A9C;
+	border-radius: 2px;
+}
+.allstaff{
+	background: #fff;
+	height: 520px;
+	border-top: 3px solid #277A9C;
+	border-radius: 2px;
+}
+.details{
+	background: #fff;
+	height: 420px;
+}
+.head1{
+	font-size: 17px;
+	padding: 10px;
+	border-bottom:1px solid #ddd;
+}
+.all{
+	font-weight: bold;
+	border:0px;
+}
+.head2{
+	background: #277A9C;
+	height: 100px;
+	padding: 7px;
+}
+.name{
+	color: #fff;
+	font-size: 17px;
+}
+.titles{
+	color: white;
+	font-size: 14px;
+	font-weight: lighter;
+}
+
+.body1{
+	padding: 10px;
+}
+.all1{
+	background: transparent;
+	border:1px solid #ccc;
+	height: 35px;
+	width: 100%;
+	color: gray;
+	padding-left: 8px;
+}
+.file {
+  visibility: hidden;
+  position: absolute;
+}
+.browse{
+	color: #fff;
+	background: #277A9C;
+	border-top-right-radius:0px; 
+	border-bottom-right-radius:0px; 
+}
+.searching{
+	padding: 10px;
+	margin-bottom: 10px;
+}
+.tata{
+	padding-top: 20px;
+	margin-top: 5px;
+	height: 558px;
+	overflow: auto;
+	width: 100%;
+}
+.fafa{
+	background:#fec107;
+	padding: 2px 5px;
+	color: #fff;
+	border-radius: 2px;
+	margin: 0px;
+}
+.fafa1{
+	background: #e74c3c;
+	padding: 2px 5px;
+	color: #fff;
+	border-radius: 2px;
+}
+.fafa2{
+	background: #277A9C;
+	padding: 2px 5px;
+	color: #fff;
+	border-radius: 2px;
+}
+.fafa3{
+	background: #242c34;
+	padding: 2px 5px;
+	color: #fff;
+	border-radius: 2px;
+}
+.tata .active{
+	color: #277A9C;
+}
+.infos{
+	padding: 10px 0px 0px 0px;
+	background:#fff;
+	height: 315px;
+	/*overflow: auto;*/
+}
+.table tr{
+	border:0px solid #fff;
+}
+
+.content .row .col-sm-4{
+
+}
+#datepicker{
+	width:100%;
+	margin: 0 20px 20px 0px;
+}
+#datepicker > span:hover{
+	cursor: pointer;
+}
+#datepicker1{
+	width:100%;
+	margin: 0 20px 20px 0px;
+}
+#datepicker1 > span:hover{
+	cursor: pointer;
+}
+
+
+
+
+label { font-size: 17px; }
+
+/*** custom checkboxes ***/
+
+input[type=checkbox] { display:none; } /* to hide the checkbox itself */
+input[type=checkbox] + label:before {
+  font-family: FontAwesome;
+  display: inline-block;
+  color: #277A9C;
+}
+
+input[type=checkbox] + label:before { content: "\f096"; } /* unchecked icon */
+input[type=checkbox] + label:before { letter-spacing: 10px; } /* space between checkbox and label */
+
+input[type=checkbox]:checked + label:before { content: "\f046"; } /* checked icon */
+input[type=checkbox]:checked + label:before { letter-spacing: 5px; } /* allow space for check mark */
+
+.spa{
+    padding:5px 10px;
+    background:#277A9C;
+    color:#fff;
+}
+#tabs li a {
+    color:black;   
+}
+#tabs .active .links{
+    background:#277A9C;
+    color:white;
+}

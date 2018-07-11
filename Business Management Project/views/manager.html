@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ALPHA | MANAGER</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/AdminLTE.css" rel="stylesheet">
+        <link href="../css/sweetalert.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/bootstrap-datepicker3.min.css">
+        <link href="../css/style.css" rel="stylesheet">
+        <link href="../css/user.css" rel="stylesheet">
+          
+    </head>
+    <body class="bg" ng-app="myAlpha" ng-controller="Ctr_Manager" ng-init="startManager()">
+    	<div class="wrapper">
+            <header class="main-header headers">
+                <a href="#" class="logo">
+                    <span class="logo-lg" ><img src="../images/logo.png" height="90" width="150"></span>
+                </a>
+                <div class="btn pull-right logout" ng-click="logout()" style="padding-top:40px; " ><a href="#" class="btn btn-primary" style="font-size: 18px">Logout <i class="fa fa-2x fa-sign-out fa-lg"></i></a></div>
+            </header>
+
+            <aside class="main-sidebar" >
+                <section class="sidebar">
+                    <ul class="sidebar-menu">
+                        <li class="treeview" id="users_link_id">
+                            <a href="#">
+                                <span><i class="fa fa-group"></i> &nbsp;USERS</span>          
+                            </a>
+                        </li>
+                        <li class="treeview" ng-click="stockList()" id="inventory_link_id">
+                            <a href="#">
+                                <span><i class="fa fa-list-alt"></i> &nbsp;INVENTORY</span>          
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="footer_other">
+                        &copy;2017 ALPHA | All rights reserved.
+                    </div>
+                </section>
+            </aside>
+
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                <div class="container-fluid">
+                	<div class="row" >
+                            <div class="col-xs-12 col-sm-12 col-md-12 ">
+                                <div class="row">
+
+                                	<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                        <div class="allstaff" >
+                                            <div class="head1">
+                                                <span class="pull-right" ><button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addUser_modal"><i class="fa fa-plus"></i>  Add</button></span>
+                                            </div>
+                                            <div class="searching">
+                                                <div class="col-md-12">
+                                                    <div class="input-group" style="width:180px">
+                                                        <input type="text" class="form-control input-sm" ng-model="searchUser" placeholder="Search">
+                                                        <span class="input-group-btn">
+                                                            <button class="browse btn btn-sm" type="button">
+                                                                <i class="fa fa-search"></i>
+                                                            </button> </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tata">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Names</th>
+                                                            <th>Privilege</th>
+                                                            <th>Phone</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr style="cursor: pointer;">
+                                                            <td>001</td>
+                                                            <td class="text-capitalize">Kanamugire Justine</td>
+                                                            <td class="text-capitalize">manager</td>
+                                                            <td>0785469321</td>
+                                                            <td class="text-uppercase">
+                                                                <div class="btn-group" id="status" data-toggle="buttons">
+																<label class="btn btn-default btn-on btn-xs" ng-class='{
+																"active": oneUser.status == "1"}' ng-click="editStatus(oneUser.status,oneUser.id)" >
+																	<input type="radio" value="1" name="multifeatured_module[module_id][status]" checked="checked" >
+																	ON</label>
+																<label class="btn btn-default btn-off btn-xs" ng-class='{
+																"active": oneUser.status == "0"}' ng-click="editStatus(oneUser.status,oneUser.id)">
+																	<input type="radio" value="0" name="multifeatured_module[module_id][status]" >
+																	OFF</label>
+																</div>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-pencil text-orange" ng-click="correspondEditUser('editUser_modal'+$index,oneUser.id)" data-toggle="modal" data-target="#editUser_modal{{$index}}" ></i>&nbsp;&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                        <tr style="cursor: pointer;">
+                                                            <td>001</td>
+                                                            <td class="text-capitalize">Kanamugire Justine</td>
+                                                            <td class="text-capitalize">manager</td>
+                                                            <td>0785469321</td>
+                                                            <td class="text-uppercase">
+                                                                <div class="btn-group" id="status" data-toggle="buttons">
+																<label class="btn btn-default btn-on btn-xs" ng-class='{
+																"active": oneUser.status == "1"}' ng-click="editStatus(oneUser.status,oneUser.id)" >
+																	<input type="radio" value="1" name="multifeatured_module[module_id][status]" checked="checked" >
+																	ON</label>
+																<label class="btn btn-default btn-off btn-xs" ng-class='{
+																"active": oneUser.status == "0"}' ng-click="editStatus(oneUser.status,oneUser.id)">
+																	<input type="radio" value="0" name="multifeatured_module[module_id][status]" >
+																	OFF</label>
+																</div>
+                                                            </td>
+                                                            <td>
+                                                                <i class="fa fa-pencil text-orange" ng-click="correspondEditUser('editUser_modal'+$index,oneUser.id)" data-toggle="modal" data-target="#editUser_modal{{$index}}" ></i>&nbsp;&nbsp;
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <div class="btn-group pull-left" style="width: 100%">
+                                                    <dir-pagination-controls pagination-id="product_page"></dir-pagination-controls>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                   	<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="details">
+											<div class="user-header head2">
+												<div class="titles">
+													<h3>
+														Uwamungu alice
+														<br />
+														<h5 style="font-size: 13px;">Member since: <span style="font-size: 12px;">Jan 24,2017</span> </h5>
+													</h3>
+												</div>
+											</div>
+											<div class="infos">
+												<table class="table table-striped">
+													<tr>
+														<td><i class="fa fa-intersex"></i>&nbsp;&nbsp;&nbsp;&nbsp;  Gender</td>
+														<td class="text-right"><b>Male</b></td>
+													</tr>
+													<tr>
+														<td><i class="fa fa-birthday-cake"></i>&nbsp;&nbsp;&nbsp; Birthday</td>
+														<td class="text-right"><b>Dec 12, 1963</b></td>
+													</tr>
+													<tr>
+														<td><i class="fa fa-phone-square"></i>&nbsp;&nbsp;&nbsp;&nbsp; Phone</td>
+														<td class="text-right"><b>0789654712</b></td>
+													</tr>
+
+													<tr>
+														<td><i class="fa fa-barcode"></i>&nbsp;&nbsp;&nbsp; ID</td>
+														<td class="text-right"><b>1199174589757</b></td>
+													</tr>
+												</table>
+											</div>
+										</div>
+                                    </div>
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                        <div class="newstaff">
+										<div class="head1">
+											<span><b>Add a new User</b></span>
+										</div>
+										<div class="body1">
+											<form id="form_addNewUser>
+
+												<div class="form-group">
+													<input type="text" class="form-control" ng-model="f_name"  placeholder="FirstName eg Jule">
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control" ng-model="l_name" placeholder="LastName eg Rugamba">
+												</div>
+												<div class="form-group">
+													<span class="radio-inline">
+														<input type="radio" name="optradio" ng-click="toggleSex('male')" ng-model="male" value="male">
+														Male </span>
+													<span class="radio-inline">
+														<input type="radio" name="optradio" ng-click="toggleSex('female')" ng-model="female"  value="female">
+														Female </span>
+												</div>
+												<div class="form-group">
+													<input type="number" class="form-control" ng-model="phone"  placeholder="ID 119870811547896">
+												</div>
+												<div class="form-group">
+													<div id="datepicker" class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd" >
+														<input  class="form-control" placeholder="Birth date" type="date" ng-model="birthday"/>
+														<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+													</div>
+												</div>
+												<div class="form-group">
+													<input type="text" maxlength="10" class="form-control" ng-model="phone" id="phone" placeholder="Contact eg 0784566351">
+												</div>
+												<div class="form-group">
+													<input type="text" class="form-control" ng-model="username" placeholder="Enter username">
+												</div>
+												<div class="form-group">
+													<input type="password" class="form-control" autocomplete="off" ng-model="pswd" id="pswd" placeholder="Enter password">
+												</div>
+												<div class="alert alert-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_error_add_member" style="text-align:left;display:none">
+													<strong> <i class="fa fa-times-circle"></i></strong><span id="isa_error_message_add_user"></span>
+												</div>
+												<div class="alert alert-success col-lg-12 col-md-12 col-sm-12 col-xs-12" id="isa_success_add_user" style="text-align:left;display:none">
+													<span id="isa_success_message_add_user"><img src="../images/spinner.gif" width="20" height="20"> Please wait...</span>
+												</div>
+												<div class="thebottom" ng-click="addUser()" id="add_user" style="display: block;">
+													<a href=""><span><i class="fa fa-user-plus"></i> Add Member <span id="img_succes_loading" style="visibility: hidden;"><img src="../images/spinner.gif" width="20" height="20"/></span></span></a>
+												</div>
+												<div class="thebottom" ng-click="editUserFinal(member_id,f_name,l_name,birthday,phone,email,location,ID,payment,admitted_year,username,pswd)" id="edit_member" hidden>
+													<a href=""><span><i class="fa fa-user-plus"></i> Edit Member</span></a>
+												</div>
+											</form>
+										</div>
+										</div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    <script src="../js/jquery.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/application.js"></script>
+    <script src="../js/services.js"></script>
+    <script src="../js/dirPagination.js"></script>
+    <script src="../js/bootstrap-datepicker.min.js"></script>
+    <script src="../js/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="../js/sweetalert.min.js"></script>
+    <script src="../js/simple-autocomplete.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $("#items_link_id").click(function() {
+                $("#item_content").show();
+                $("#stock_content").hide();
+            });
+
+            $("#stock_link_id").click(function() {
+                $("#item_content").hide();
+                $("#stock_content").show();
+            });
+        });
+    </script>
+    </body>
+</html>
